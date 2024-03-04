@@ -116,3 +116,26 @@ h1 {
     }
 
 }
+@media only screen and (min-device-width : 414px) and (max-device-width : 896px) and (-webkit-device-pixel-ratio : 2) and (orientation : portrait) {
+.b1{
+    top: 28px;
+}
+.b2{
+    top: 529px;
+}
+.b3{
+    top: 1032px;
+}
+.b4{
+    top: 1508px;
+}
+
+.box {
+    left: calc(50% - 13px);
+    width: 320px;
+    min-height: 197px;
+    padding: 9px;
+
+}
+
+}

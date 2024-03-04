@@ -105,22 +105,25 @@
     .u-section-1 .u-text-1 {
       width: auto;
       margin-right: 367px;
-      margin-left: 384px;
+      margin-left: 35px;
+      font-size: 15px;
+      margin-top: -29px;
     }
   
     .u-section-1 .u-text-2 {
       width: auto;
       margin-top: 65px;
       margin-right: 189px;
-      margin-left: 260px;
+      margin-left: 62px;
     }
   
     .u-section-1 .u-image-1 {
       width: 218px;
-      height: 218px;
-      margin-top: -176px;
-      margin-right: auto;
-      margin-left: -11px;
+    height: 218px;
+    margin-top: -176px;
+    margin-right: auto;
+    margin-left: 710px;
+    top:-179px;
     }
   
     .u-section-1 .u-text-3 {
@@ -135,6 +138,27 @@
       margin-right: 7px;
       margin-left: 17px;
     }
+    .u-icon.u-text-palette-1-base.u-icon-1  {
+      transform: scale(0.8); /* Réduit la taille des icônes */
+      width: 20px; /* Ajuste la largeur des icônes */
+      height: 20px; /* Ajuste la hauteur des icônes */
+      margin-left: 5px; /* Ajoute une marge à gauche pour ajuster l'emplacement */
+      margin-top: 55px; /* Ajoute une marge en haut pour ajuster l'emplacement */
+      display: inline-block; /* Assure que les propriétés de taille sont appliquées */
+      margin-right: 90px; /* Ajoute de l'espace à droite de la première icône */
+
+    }
+    .u-icon.u-text-palette-1-base.u-icon-2  {
+      transform: scale(0.8); /* Réduit la taille des icônes */
+      width: 20px; /* Ajuste la largeur des icônes */
+      height: 20px; /* Ajuste la hauteur des icônes */
+      margin-left: 100px; /* Ajoute une marge à gauche pour ajuster l'emplacement */
+      margin-top: 55px; /* Ajoute une marge en haut pour ajuster l'emplacement */
+      display: inline-block; /* Assure que les propriétés de taille sont appliquées */
+      margin-right: 100px; /* Ajoute de l'espace à droite de la première icône */
+
+
+  }
   }
   
   @media (max-width: 991px) {
@@ -158,9 +182,11 @@
     }
   
     .u-section-1 .u-text-1 {
-      margin-top: -34px;
+      margin-top: -27px;
       margin-right: 246px;
-      margin-left: 302px;
+      margin-left: 43px;
+      font-size: 14px;
+  
     }
   
     .u-section-1 .u-text-2 {
@@ -170,10 +196,11 @@
     }
   
     .u-section-1 .u-image-1 {
-      width: 205px;
-      height: 205px;
-      margin-top: -110px;
-      margin-left: -33px;
+      width: 166px;
+    height: 154px;
+    margin-top: -38px;
+    margin-left: 620px;
+    top: -352px;
     }
   
     .u-section-1 .u-text-3 {
@@ -185,6 +212,27 @@
       margin-right: 16px;
       margin-left: 11px;
     }
+    .u-icon.u-text-palette-1-base.u-icon-1  {
+      transform: scale(0.8); /* Réduit la taille des icônes */
+      width: 20px; /* Ajuste la largeur des icônes */
+      height: 20px; /* Ajuste la hauteur des icônes */
+      margin-left: 5px; /* Ajoute une marge à gauche pour ajuster l'emplacement */
+      margin-top: 55px; /* Ajoute une marge en haut pour ajuster l'emplacement */
+      display: inline-block; /* Assure que les propriétés de taille sont appliquées */
+      margin-right: 90px; /* Ajoute de l'espace à droite de la première icône */
+
+    }
+    .u-icon.u-text-palette-1-base.u-icon-2  {
+      transform: scale(0.8); /* Réduit la taille des icônes */
+      width: 20px; /* Ajuste la largeur des icônes */
+      height: 20px; /* Ajuste la hauteur des icônes */
+      margin-left: 100px; /* Ajoute une marge à gauche pour ajuster l'emplacement */
+      margin-top: 55px; /* Ajoute une marge en haut pour ajuster l'emplacement */
+      display: inline-block; /* Assure que les propriétés de taille sont appliquées */
+      margin-right: 100px; /* Ajoute de l'espace à droite de la première icône */
+
+
+  }
   }
   
   @media (max-width: 767px) {
@@ -209,22 +257,25 @@
     .u-section-1 .u-text-1 {
       margin-top: -29px;
       margin-right: 182px;
-      margin-left: 198px;
+      margin-left: 22px;
+      font-size: 16px;
     }
   
     .u-section-1 .u-text-2 {
       margin-top: 32px;
-      margin-right: 232px;
-      margin-left: 14px;
+      margin-right: -14px;
+      margin-left: 9px;
+  
     }
   
     .u-section-1 .u-image-1 {
       width: 161px;
       height: 161px;
       background-position: 50% 50%;
-      margin-top: -113px;
-      margin-right: 11px;
+      margin-top: -209px;
       margin-left: auto;
+      margin-right: -88px;
+      top: -163px
     }
   
     .u-section-1 .u-text-3 {
@@ -243,7 +294,29 @@
       margin-top: 60px;
       margin-bottom: 0;
     }
+
+    .u-icon.u-text-palette-1-base.u-icon-1  {
+      transform: scale(0.8); /* Réduit la taille des icônes */
+      width: 20px; /* Ajuste la largeur des icônes */
+      height: 20px; /* Ajuste la hauteur des icônes */
+      margin-left: 5px; /* Ajoute une marge à gauche pour ajuster l'emplacement */
+      margin-top: 55px; /* Ajoute une marge en haut pour ajuster l'emplacement */
+      display: inline-block; /* Assure que les propriétés de taille sont appliquées */
+      margin-right: 90px; /* Ajoute de l'espace à droite de la première icône */
+
+    }
+    .u-icon.u-text-palette-1-base.u-icon-2  {
+      transform: scale(0.8); /* Réduit la taille des icônes */
+      width: 20px; /* Ajuste la largeur des icônes */
+      height: 20px; /* Ajuste la hauteur des icônes */
+      margin-left: 100px; /* Ajoute une marge à gauche pour ajuster l'emplacement */
+      margin-top: 55px; /* Ajoute une marge en haut pour ajuster l'emplacement */
+      display: inline-block; /* Assure que les propriétés de taille sont appliquées */
+      margin-right: 100px; /* Ajoute de l'espace à droite de la première icône */
+
+
   }
+}
   
   @media (max-width: 575px) {
     .u-section-1 .u-sheet-1 {
@@ -265,15 +338,20 @@
     }
   
     .u-section-1 .u-text-1 {
-      margin-right: 80px;
-      margin-left: 103px;
+      margin-right: 41px;
+      margin-left: 42px;
+      font-size: 14px;
+
     }
+
+
+    
   
     .u-section-1 .u-text-2 {
       font-size: 0.875rem;
       margin-top: 40px;
       margin-right: 12px;
-      margin-left: 106px;
+      margin-left: -16px;
     }
   
     .u-section-1 .u-image-1 {
@@ -297,6 +375,53 @@
       width: 90px;
       height: 90px;
       background-position: 50% 50%;
-      margin: -2046px auto 1957px 16px;
-    }
+      margin: -2046px auto 1957px 270px;
+      top: -1163px;
+      }
+
+
+
+
+      .u-icon.u-text-palette-1-base.u-icon-1  {
+        transform: scale(0.8); /* Réduit la taille des icônes */
+        width: 20px; /* Ajuste la largeur des icônes */
+        height: 20px; /* Ajuste la hauteur des icônes */
+        margin-left: 5px; /* Ajoute une marge à gauche pour ajuster l'emplacement */
+        margin-top: 55px; /* Ajoute une marge en haut pour ajuster l'emplacement */
+        display: inline-block; /* Assure que les propriétés de taille sont appliquées */
+        margin-right: 90px; /* Ajoute de l'espace à droite de la première icône */
+
+      }
+      .u-icon.u-text-palette-1-base.u-icon-2  {
+        transform: scale(0.8); /* Réduit la taille des icônes */
+        width: 20px; /* Ajuste la largeur des icônes */
+        height: 20px; /* Ajuste la hauteur des icônes */
+        margin-left: 100px; /* Ajoute une marge à gauche pour ajuster l'emplacement */
+        margin-top: 55px; /* Ajoute une marge en haut pour ajuster l'emplacement */
+        display: inline-block; /* Assure que les propriétés de taille sont appliquées */
+        margin-right: 100px; /* Ajoute de l'espace à droite de la première icône */
+
   }
+}
+   @media (max-width: 420px) {
+      .u-icon.u-text-palette-1-base.u-icon-1  {
+        transform: scale(0.8); /* Réduit la taille des icônes */
+        width: 20px; /* Ajuste la largeur des icônes */
+        height: 20px; /* Ajuste la hauteur des icônes */
+        margin-left: 5px; /* Ajoute une marge à gauche pour ajuster l'emplacement */
+        margin-top: 55px; /* Ajoute une marge en haut pour ajuster l'emplacement */
+        display: inline-block; /* Assure que les propriétés de taille sont appliquées */
+        margin-right: 90px; /* Ajoute de l'espace à droite de la première icône */
+
+      }
+      .u-icon.u-text-palette-1-base.u-icon-2  {
+        transform: scale(0.8); /* Réduit la taille des icônes */
+        width: 20px; /* Ajuste la largeur des icônes */
+        height: 20px; /* Ajuste la hauteur des icônes */
+        margin-left: 100px; /* Ajoute une marge à gauche pour ajuster l'emplacement */
+        margin-top: 55px; /* Ajoute une marge en haut pour ajuster l'emplacement */
+        display: inline-block; /* Assure que les propriétés de taille sont appliquées */
+        margin-right: 100px; /* Ajoute de l'espace à droite de la première icône */
+
+      }
+    }

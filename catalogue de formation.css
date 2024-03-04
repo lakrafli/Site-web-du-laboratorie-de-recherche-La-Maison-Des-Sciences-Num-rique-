@@ -28,6 +28,7 @@
     position: absolute;
     top: 0;
     right: 0;
+    margin-block: 530px;
 }
 .header-image2{
     position: absolute;
@@ -62,7 +63,7 @@
     width: 351px;
   height: 359px;
   border-radius: 50%;
-  margin-top: 566px;
+  margin-top: 482px;
 }
 
 .timeline{
@@ -146,4 +147,31 @@ h1{
     font-size: 24px; /* Taille de la police du titre */
     font-weight: bold; /* Poids de la police (gras) */
     /* Ajoutez d'autres styles selon vos préférences */
+}
+@media only screen and (min-device-width : 414px) and (max-device-width : 896px) and (-webkit-device-pixel-ratio : 2) and (orientation : portrait) {
+    .header-image img {
+      width: 204px;
+      height: 358px;
+      border-radius: 46%;
+      margin-top: 698px;
+    }
+
+
+    .header-image2 img {
+        width: 165px;
+        height: 268px;
+        border-radius: 50%;
+        margin-top: 1932px;
+        margin-left: 142px;
+  }
+  .header-image3 img {
+    width: 197px;
+    height: 269px;
+    border-radius: 50%;
+    margin-top: 559px;
+    position: relative;
+    left: -222px;
+
+}
+
 }
