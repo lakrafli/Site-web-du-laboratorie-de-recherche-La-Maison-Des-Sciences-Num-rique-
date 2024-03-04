@@ -1,0 +1,207 @@
+
+/*Title*/
+.menu-dropdown {
+	position: relative;
+	display: inline-block;
+  }
+  body{
+    font-family: 'Raleway', sans-serif;
+    background: #608594;
+}
+  .menu-title {
+	cursor: pointer;
+	padding: 5px;
+	margin: 2% 47% 0 36%;
+	background: linear-gradient(#e5e5e5, #bcd6ee);
+	border: 1px solid #000000;
+	font-size: 3vw;
+  }
+  
+  #menuTitle {
+	font-size: 20px; /* Ajustez la taille de police selon vos besoins */
+}	
+  .arrow {
+	margin-right: 0px;
+  font-size: 1.5vw;
+  }
+  
+  
+  	
+
+
+/*barre scrolle playslite*/ 
+  .video-list-container {
+	max-height: 400px; /* Réglez la hauteur maximale selon vos besoins */
+	overflow-y:scroll;
+	
+  }
+  
+
+
+  .menu-content a {
+	color: #333;
+	padding: 5px 5px;
+	display: block;
+	text-decoration: none;
+
+  }
+
+  .menu-content a:hover {
+	background-color: #ffffff;
+	border-radius: 25px;
+	width: 173px;
+    height: 32px;
+
+
+
+  }
+
+  .menu-dropdown:hover .menu-content {
+	display: block;
+
+  }
+
+
+/*fin*/
+
+
+
+
+.container {
+	max-width: 1200px;
+	margin: auto;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	gap: 20px;
+}
+.main-video-container {
+	flex: 1 1 700px;
+	background-color: #fff;
+	padding: 15px;
+}
+.main-video {
+	margin-bottom: 7px;
+	width: 100%;
+}
+.main-vid-title {
+	font-size: 20px;
+	color: #444;
+}
+.video-list-container {
+	flex: 1 1 300px;
+	border-left: 2px solid #eee;
+	background-color: #fff;
+	padding: 15px 15px 15px 35px;
+}
+
+.list {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+	padding: 10px;
+	border: 1px solid #eee;
+	cursor: pointer;
+	border-radius: 5px;
+	margin-bottom: 10px;
+}
+.list:last-child {
+	margin-bottom: 0;
+}
+.list.active {
+	background-color: #6488b8;
+}
+.container .video-list-container .list.active .list-title {
+	color: #fff;
+}
+.list-video {
+	width: 100px;
+	border-radius: 5px;
+}
+.list-title {
+	font-size: 17px;
+	color: #444;
+}
+
+
+
+/*1330*/
+@media (max-width:1330px) {
+	.container {
+		margin: 0;
+	}
+	.video-list-container {
+		border: none !important;
+		padding: 15px !important;
+	}
+	.menu-title {
+		font-size: 5px; 
+		margin: -1% 52% 0 27%;	}
+	h1:not(.u-title) {
+		font-weight: 400;
+		font-size: 2.5rem;
+		line-height: 1.1;
+		margin-top: 20px;
+		margin-bottom: 20px;
+	}
+	#menuTitle {
+		font-size: 20px; /* Ajustez la taille de police selon vos besoins */
+	  }
+	  
+}
+
+/*1244*/
+@media (max-width:1244px) {
+	.container {
+		margin: 0;
+	}
+	.video-list-container {
+		border: none !important;
+		padding: 15px !important;
+	}
+	.menu-title {
+		margin: -1% 10% 0 16%;
+	}
+		.arrow {
+			font-size: 30px; 	
+		}
+		#menuTitle {
+			font-size: 20px; /* Ajustez la taille de police selon vos besoins */
+		}	
+}
+
+/*450*/
+@media (max-width:450px) {
+	.video-list-container {
+		border: none !important;
+		padding: 15px !important;
+	}
+	.main-vid-title {
+		font-size: 15px;
+		text-align: center;
+	}
+	
+	.list {
+		flex-flow: column;
+		gap: 10px;
+	}
+	.list-video {
+		width: 100%;
+	}
+	.list-title {
+		font-size: 15px;
+		text-align: center;
+	}
+
+	.arrow {
+		font-size: 30px; 	
+	}
+	#menuTitle {
+		font-size: 20px; /* Ajustez la taille de police selon vos besoins */
+	}	
+
+	.menu-title {
+		
+		margin: -1% 10% 0 16%;	
+	  }
+}

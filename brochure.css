@@ -1,0 +1,168 @@
+
+.u-body .main-content {
+  background-color: #354878; /* Remplacez par la couleur de fond souhaitée */
+  padding: 20px; /* Ajoutez un rembourrage pour un meilleur aspect visuel, ajustez selon vos préférences */
+}
+
+/* Style existant pour le corps (body) */
+
+
+
+#couleur-personnalisee {
+  color: black;
+}
+
+.responsive-image {
+  background-color: #354878;
+
+    width: 300px; /* Largeur de l'image */
+    height: auto; /* La hauteur s'ajustera automatiquement pour maintenir les proportions d'origine */
+    margin: 10px; /* Marge autour de l'image */
+    padding: 5px; /* Espacement à l'intérieur de la bordure */
+    position: relative; /* Position relative pour permettre un positionnement personnalisé */
+    left: 20px; /* Décalage de 20 pixels vers la gauche (utilisez les valeurs qui conviennent à votre mise en page) */
+    top: 10px; /* Décalage de 10 pixels vers le haut */
+}
+
+
+.scene {
+  width: 300px;
+  height: 300px;
+  perspective: 300px;
+  position: relative;
+  top: calc(69% - 296 px);
+  left: 50%;
+  transform: translate(-50%, -100%); 
+  perspective: 1000px;
+  perspective-origin: 50% -0px; 
+  margin-top: 445px;
+}
+
+
+.stand {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d; 
+  transform: translateZ(-300px) rotateY(25deg); 
+  animation: spin 30s infinite linear;
+  animation-timing-function: ease-in-out;
+}
+.download-link {
+  display: block;
+  padding: 10px;
+  color: #1a1b1f;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 5px;
+  margin-top: 472px;
+  margin-left: 500px;
+}
+.custom-link {
+  display: block;
+  padding: 10px;
+  color: #1a1b1f;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 5px;
+  margin-top: 47px;
+  white-space: nowrap;
+  margin-left: 500px; }
+
+
+
+.brochure {
+  position: absolute;
+  width: 200px;
+  border: 1px solid rgba(0,0,0,.2);
+  transform-origin: center bottom;
+  &.b1 { transform: rotateX(12deg) translateX(50px) translateY(40px) translateZ(108px) }
+  &.b2 { transform: rotateX(14deg) translateX(50px) translateY(46px) translateZ(120px) }
+  &.b3 { 
+    transform-style: preserve-3d;
+    transform: rotateX(16deg) translateX(50px) translateY(42px) translateZ(52px);
+    .booklet-component {
+      width: 200px;
+    }
+    .page { 
+      position: absolute;
+      transform-origin: left center;
+      width: 200px;
+      height: 282.5px;
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); 
+      &.p2 { background-color: #cfd0dd }
+      &.p3 { background-color: #9e9fa8 }
+      &.p4 { background-color: #83848a }
+      &.p5 { background-color: #cfd0dd }
+    } 
+    .cover { 
+      position: absolute; 
+      transform-origin: left center;
+      transform-style: preserve-3d; 
+      backface-visibility: hidden;
+      .inner {
+        position: absolute;
+        transform: rotateY(180deg);
+      }
+      .outer {
+        position: absolute;
+      }
+    }
+  }
+}
+
+.panel {
+  position: absolute;
+  stroke-width: 0.5;
+  stroke: rgba(0, 0, 0, 0.3);
+  fill: #eec8b626;
+  &.front  { 
+    transform-origin: center bottom;
+    transform: rotateY(0deg) translateZ(150px) rotateX(10deg); 
+  }
+  &.back   { 
+    transform-origin: center bottom;
+    transform: rotateY(0deg) translateZ(100px) rotateX(10deg); 
+  }
+  &.right  { 
+    transform: rotateY(-90deg) translateZ(-105px); 
+  }
+  &.left   { 
+    transform: rotateY(-90deg) translateZ(105px); 
+  }
+  &.bottom { 
+    transform: rotateX(-90deg) translateZ(150px); 
+  }
+}
+
+@keyframes spin {
+  0% { transform: translateZ(-300px) rotateY(-35deg); }
+  50% { transform: translateZ(-300px) rotateY(35deg); }
+  100% { transform: translateZ(-300px) rotateY(-35deg); }
+}
+
+@media (max-width: 575px) {
+  .download-link {
+    display: block;
+    padding: 10px;
+    color: #1a1b1f;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-top: 472px;
+    margin-left: 259px;
+  }
+  .custom-link {
+    display: block;
+    padding: 10px;
+    color: #1a1b1f;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-top: 47px;
+    white-space: nowrap;
+    margin-left: 243px; }
+
+}
+
+

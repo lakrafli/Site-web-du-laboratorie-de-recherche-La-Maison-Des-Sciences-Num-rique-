@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;" lang="fr">
+  <canvas id='canvas1'></canvas>
+
+  <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta charset="utf-8">
+      <meta name="keywords" content="​Conta​ct">
+      <meta name="description" content="">
+      <link rel="icon" id="logo"   type="image/Logo-USPN-2023 .png" href="images/logo-LaMSN.png" />
+      <title>LaMSN</title>
+      <link rel="stylesheet" href="nicepage.css" media="screen">
+      <link rel="stylesheet" href="Formation.css" media="screen">
+      <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
+      <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
+      <meta name="generator" content="Nicepage 6.3.1, nicepage.com">
+      <meta name="referrer" content="origin">
+      <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+    
+      
+      <script type="application/ld+json">{
+      "@context": "http://schema.org",
+      "@type": "Organization",
+      "name": "",
+      "logo": "images/Logo-USPN-2023.png"
+  }</script>
+      <meta name="theme-color" content="#478ac9">
+      <meta property="og:title" content="Formation">  
+      <meta property="og:type" content="website">
+    <meta data-intl-tel-input-cdn-path="intlTelInput/">
+  </head>
+  <body data-home-page="Formation.html" data-home-page-title="Formation" data-path-to-root="./" data-include-products="false" class="u-body u-overlap u-xl-mode" data-lang="fr">
+    
+    <!--Header-->
+
+    <script>
+      const canvas = document.getElementById("canvas1");
+      const ctx = canvas.getContext("2d"); // CTX MEANS CONTEXT
+      ctx.canvas.width  = window.innerWidth;
+      ctx.canvas.height = window.innerHeight;
+      let particleArray;
+      
+      // get mouse mouse position ///////////////////////////////
+      let mouse = {
+        x: null,
+        y: null,
+        radius: ((canvas.height/80) * (canvas.width/80))
+      }
+      window.addEventListener('mousemove', 
+        function(event){
+          mouse.x = event.x;
+          mouse.y = event.y;
+      });
+      
+      // create Particle   activation enlever  e a la fin de particlee
+      class Particlee   {
+          constructor(x, y, directionX, directionY, size, color) {
+              this.x = x;
+              this.y = y;
+              this.directionX = directionX;
+              this.directionY = directionY;
+              this.size = size;
+              this.color = color;
+              this.speedX = this.directionX;
+              this.speedY = this.directionY;
+          }
+          // create method to draw individual particle
+          draw() {
+              ctx.beginPath();
+              ctx.arc(this.x,this.y,this.size,0,Math.PI * 4, false);
+      
+              ctx.fillStyle = 'blue';
+            ctx.fill();
+          }
+      
+          // check particle position, check mouse position, move the paticle, draw the particle
+          update() {
+              // check if particle is still within canvas
+              if (this.x > canvas.width || this.x < 0){
+            this.directionX = -this.directionX;
+                  this.speedX = this.directionX;
+            } if (this.y + this.size > canvas.height || this.y - this.size < 0){
+              this.directionY = -this.directionY;
+                  this.speedY = this.directionY;
+            }
+              // check mouse position/particle position - collision detection
+              let dx = mouse.x - this.x;
+              let dy = mouse.y - this.y;
+              let distance = Math.sqrt(dx*dx + dy*dy);
+              if (distance < mouse.radius + this.size){
+                  if(mouse.x < this.x && this.x < canvas.width - this.size*10){
+                     this.x+=10;
+                  }
+                  if (mouse.x > this.x && this.x > this.size*10){
+                      this.x-=10;
+                  }
+                  if (mouse.y < this.y && this.y < canvas.height - this.size*10){
+                      this.y+=10;
+                  }
+                  if (mouse.y > this.y && this.y > this.size*10){
+                      this.y-=10;
+                  }
+              }
+              // move particle
+              this.x += this.directionX;
+              this.y += this.directionY;
+              // call draw method
+              this.draw();
+          }
+      }
+      
+      // check if particles are close enough to draw line between them
+      function connect() {
+          let opacityValue = 1;
+          for (let a = 0; a < particleArray.length; a++) {
+              for (let b = a; b < particleArray.length; b++){
+                  let distance = ((particleArray[a].x - particleArray[b].x) * (particleArray[a].x - particleArray[b].x))
+                  +   ((particleArray[a].y - particleArray[b].y) * (particleArray[a].y - particleArray[b].y));
+                  if  (distance < (canvas.width/7) * (canvas.height/7))
+                    {   
+                        opacityValue = 1-(distance/10000);
+                        ctx.strokeStyle='rgba(0,0,1,' + opacityValue +')';
+                        ctx.beginPath();
+                        ctx.lineWidth = 5 ;
+                        ctx.moveTo(particleArray[a].x, particleArray[a].y);
+                        ctx.lineTo(particleArray[b].x, particleArray[b].y);
+                        ctx.stroke();
+        
+                    }    
+          }
+          }
+      }
+      
+      // create particle array 
+      function init(){
+          particleArray = [];
+          let numberOfParticles = (canvas.height*canvas.width)/9000;
+          for (let i=0; i<numberOfParticles; i++){
+              let size = (Math.random()*20)+1;
+              let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+              let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+              let directionX = (Math.random() * 2) - 1;
+              let directionY = (Math.random() * 2) - 1;
+              
+              let color = 'gold';
+             // ca auss enlver  particleArray.push(new Particle(x, y, directionX, directionY, size, color));
+          }
+      }
+      
+      // create animation loop
+      function animate(){
+        requestAnimationFrame(animate);
+        ctx.clearRect(0,0,innerWidth,innerHeight);
+        
+        for (let i = 0; i < particleArray.length; i++){
+          particleArray[i].update();
+        }
+          connect();
+      }
+      init();
+      animate();
+      
+      
+      // RESIZE SETTING - empty and refill particle array every time window changes size + change canvas size
+      window.addEventListener('resize',
+        function(){
+          canvas.width = innerWidth;
+          canvas.height = innerHeight;
+              mouse.radius = ((canvas.height/80) * (canvas.width/80));
+          init();
+        }
+      )
+      // 2) SET MOUSE POSITION AS UNDEFINED when it leaves canvas//////
+      window.addEventListener('mouseout',
+        function(){
+          mouse.x = undefined;
+            mouse.y = undefined;
+              console.log('mouseout');  
+        }
+      )
+
+    </script>
+<style> 
+#canvas1 {
+  position:absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 10%;
+ z-index: 20;
+ pointer-events: none;
+}
+
+</style>
+
+
+
+
+
+
+
+
+    
+    <header class="u-clearfix u-gradient u-header u-header" id="sec-0b32"><div class="u-clearfix u-sheet u-sheet-1">
+        <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
+          <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px; font-weight: 700; text-transform: uppercase;">
+            <a class="u-button-style u-custom-active-border-color u-custom-active-color u-custom-border u-custom-border-color u-custom-borders u-custom-hover-border-color u-custom-hover-color u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-text-active-color u-custom-text-color u-custom-text-hover-color u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="#">
+              <svg class="u-svg-link" viewBox="0 0 24 24"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
+              <svg class="u-svg-content" version="1.1" id="menu-hamburger" viewBox="0 0 16 16" x="0px" y="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
+</g></svg>
+            </a>
+          </div>
+          <div class="u-custom-menu u-nav-container">
+            <ul class="u-nav u-spacing-30 u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-border-2 u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-grey-90 u-text-grey-90 u-text-hover-grey-90" href="index.html"  style="padding: 10px 6px;">Accueil</a>
+</li><li class="u-nav-item"><a class="u-border-2 u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-grey-90 u-text-grey-90 u-text-hover-grey-90" href=# style="padding: 10px 6px;">Formation</a><div class="u-nav-popup"><ul class="u-h-spacing-28 u-nav u-unstyled u-v-spacing-8"><li class="u-nav-item">
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-palette-1-base" href="Catalogue de formation.html"  > Catalogue de Formations</a>
+</li></ul>
+</div>
+</li><li class="u-nav-item"><a class="u-border-2 u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-grey-90 u-text-grey-90 u-text-hover-grey-90" href="#Actualité" style="padding: 10px 6px;">Actualité</a>
+</li><li class="u-nav-item"><a class="u-border-2 u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-grey-90 u-text-grey-90 u-text-hover-grey-90" target="_blank"  style="padding: 10px 6px;">ÉQUIPES PROJETS</a>
+  
+  <div class="u-nav-popup"><ul class="u-h-spacing-28 u-nav u-unstyled u-v-spacing-8">
+
+<li class="u-nav-item"><a class="u-button-style u-nav-link u-palette-1-base"href="health.html">Health &amp;AI</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-palette-1-base"href="AI&DATA.html">DATA&amp;AI</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-palette-1-base"href="cybercecurity&AI.html">cybersécurité&amp;AI</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-palette-1-base"href="Digital&Art.html">Digital art</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-palette-1-base"href="fintechs&energyTransiction.html">FINTECH &amp; Energy Transiction</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-palette-1-base"href="Digital humanities.html">Digital  Humanities</a>
+
+
+</li></ul>
+</div>
+<li class="u-nav-item">
+  <a class="u-border-2 u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-grey-90 u-text-grey-90 u-text-hover-grey-90" style="padding: 10px 6px;">Vision</a>
+  <div class="u-nav-popup">
+      <ul class="u-h-spacing-28 u-nav u-unstyled u-v-spacing-8">
+          <li class="u-nav-item"><a href="visions et strategie.html" class="u-button-style u-nav-link u-palette-1-base">Stratégie</a></li>
+          <li class="u-nav-item"><a href="objectif.html" class="u-button-style u-nav-link u-palette-1-base">Objectifs</a></li>
+          <li class="u-nav-item"><a href="Transformations numériques.html" class="u-button-style u-nav-link u-palette-1-base">Transformation Numériques</a></li>
+          <li class="u-nav-item"><a href="lamsn.html" class="u-button-style u-nav-link u-palette-1-base">LaMsn</a></li>
+      </ul>
+  </div>
+</li>
+</li><li class="u-nav-item"><a class="u-border-2 u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-grey-90 u-text-grey-90 u-text-hover-grey-90" href="Contact.html" style="padding: 10px 6px;">Contact</a>
+
+
+</li></ul>
+
+<!--responsive bar-->
+          </div>
+          <div class="u-custom-menu u-nav-container-collapse">
+            <div class="u-black u-container-style u-inner-container-layout u-opa city u-opacity-95 u-sidenav">
+              <div class="u-inner-container-layout u-sidenav-overflow">
+                <div class="u-menu-close"></div>
+                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-5"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="#">Accueil</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Formation.html">Formation</a><div class="u-nav-popup"><ul class="u-h-spacing-28 u-nav u-unstyled u-v-spacing-8"><li class="u-nav-item">
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link"href="Catalogue de formation.html" >Catalogue de Formations</a>
+</li></ul>
+</div>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="actualité.html">Actualité</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" target="_blank">ÉQUIPES PROJETS</a><div class="u-nav-popup"><ul class="u-h-spacing-28 u-nav u-unstyled u-v-spacing-8">
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link"href="AI&DATA.html">DATA&amp;AI</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link"href="health.html">Health &amp;AI</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link"href="cybercecurity&AI.html">cybersécurité&amp;AI</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link"href="Digital&Art.html">Digital art</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link"href="fintechs&energyTransiction.html">FINTECH &amp; Energy Transiction</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link"href="Digital humanities.html">Digital  Humanities</a>
+
+</li></ul>
+</div>
+<li class="u-nav-item">
+  <a href="Contact.html" class="u-button-style u-nav-link">Contact</a>
+</li>
+<li class="u-nav-item">
+  <a  class="u-button-style u-nav-link">Vision</a>
+  <div class="u-nav-popup">
+      <ul class="u-h-spacing-28 u-nav u-unstyled u-v-spacing-8">
+          <li class="u-nav-item"><a href="visions et strategie.html" class="u-button-style u-nav-link">Stratégie</a></li>
+          <li class="u-nav-item"><a href="objectif.html" class="u-button-style u-nav-link">Objectifs</a></li>
+          <li class="u-nav-item"><a href="Transformations numériques.html" class="u-button-style u-nav-link">Transformation Numériques</a></li>
+          <li class="u-nav-item"><a href="lamsn.html" class="u-button-style u-nav-link">LaMsn</a></li>
+      </ul>
+  </div>
+</li>
+
+              </div>
+            </div>
+            <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+          </div>
+        </nav>
+        <a href="index.html" class="u-image u-logo u-image-1" data-image-width="400" data-image-height="152">
+          <img src="images/Logo-USPN-2023.png" class="u-logo-image u-logo-image-1">
+        </a>
+      </div></header>
+      <!--VId back gr-->
+      <section class="u-border-1 u-border-white u-clearfix u-gradient u-lightbox u-section-1" id="sec-8c04">
+        <video class="custom-expanded u-image u-image-default u-image-1" autoplay muted loop>
+          <source src="videos/4K blue particle light sea level stage performance background.mp4" type="video/mp4">
+      </video>
+        <img class="u-image u-image-contain u-image-default u-image-2" src="images/LaMSN-logo-BL.png" alt="" data-image-width="1637" data-image-height="418">
+
+        <div class="lamns-container">
+          <div class="lamns-text">
+              <h1>Bienvenue sur le site de LaMSN!</h1>
+              <p>Découvrez LaMSN, une nouvelle entité dynamique dédiée à la recherche, à la formation et à l'innovation au sein de l'université Sorbonne Paris Nord. Notre structure offre des espaces innovateurs favorisant des expertises pluridisciplinaires de grande envergure dans le domaine du numérique.</p>
+          </div>
+          <div class="lamns-images">
+              <div class="lamns-main-image">
+                  <img src="images/18_lamsn-un-tiers-lieu-dexcellence-et-de-partage-autour-des-sciences-numeriques-en-e-sante-et-fintech_213.jpg" alt="LaMSN Building">
+              </div>
+              <div class="lamns-overlay-images">
+                  <img src="images/tlcharg.jpeg" alt="Research Concept" class="overlay-image" id="overlay-image-2">
+              </div>
+          </div>
+      </div>
+        <!--ACTUALITE-->
+        <img src="images/charte3.PNG" alt="Charte graphique" class="responsive-image">
+
+        <h3 class="u-text u-text-default u-text-2" id="Actualité"> Actua​lités </h3>
+        <div class="u-border-1 u-border-white u-line u-line-horizontal u-line-1"></div>
+        <div class="u-list u-list-1">
+          <div class="u-repeater u-repeater-1">
+            <div class="u-align-center u-container-style u-custom-item u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-1">
+              <div class="u-container-layout u-similar-container u-container-layout-3">
+                <img class="u-expanded-height u-image u-image-default u-image-6" src="images/Capturedcran2024-01-23100739.png" alt="" data-image-width="619" data-image-height="447">
+
+                <p class="u-custom-item u-text u-text-3"> LaMSN - La Maison des Sciences Numériques de l’Université Sorbonne Paris Nord, en partenariat avec Google Ateliers Numériques, vous propose une formation exceptionnelle de 2 jours,</p>
+                  
+                
+                <span class="u-border-2 u-border-palette-1-base u-icon u-icon-circle u-text-palette-1-base u-icon-1" id="monSpan">
+                  <svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 60 60" style="">
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-8fdb"></use>
+                  </svg>
+                  <svg class="u-svg-content" viewBox="0 0 60 60" x="0px" y="0px" id="svg-8fdb" style="enable-background:new 0 0 60 60;">
+                      <g>
+                          <path d="M45.563,29.174l-22-15c-0.307-0.208-0.703-0.231-1.031-0.058C22.205,14.289,22,14.629,22,15v30
+                                    c0,0.371,0.205,0.711,0.533,0.884C22.679,45.962,22.84,46,23,46c0.197,0,0.394-0.059,0.563-0.174l22-15
+                                    C45.836,30.64,46,30.331,46,30S45.836,29.36,45.563,29.174z M24,43.107V16.893L43.225,30L24,43.107z"></path>
+                          <path d="M30,0C13.458,0,0,13.458,0,30s13.458,30,30,30s30-13.458,30-30S46.542,0,30,0z M30,58C14.561,58,2,45.439,2,30
+                                    S14.561,2,30,2s28,12.561,28,28S45.439,58,30,58z"></path>
+                      </g>
+                  </svg>
+              </span>
+              </div>
+            </div>
+            <script>
+              document.getElementById("monSpan").addEventListener("click", function() {
+                  // Rediriger vers une autre page
+                  window.location.href = "actualité.html"; 
+              });
+          </script>
+
+
+
+
+
+
+            <div class="u-align-justify u-container-style u-custom-item u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-2">
+              <div class="u-container-layout u-similar-container u-container-layout-4">
+                <img class="u-expanded-height u-image u-image-default u-image-7" src="images/Capturedcran2024-01-23101225.png" alt="" data-image-width="572" data-image-height="803">
+                <p class="u-custom-item u-text u-text-4"> Mise en lumière de LaMSN - La Maison des Sciences Numériques lors du 70ème anniversaire de la Fondation Maison du Maroc ! 🌟<br>dédié àl'univers passionnant du marketing digital, de l'intelligence artificielle et de la cybersécurité.<br>
+                </p>
+                <span class="u-border-2 u-border-palette-1-base u-icon u-icon-circle u-text-palette-1-base u-icon-2" id="monDeuxiemeSpan">
+                  <svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 60 60" style="">
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-41ae"></use>
+                  </svg>
+                  <svg class="u-svg-content" viewBox="0 0 60 60" x="0px" y="0px" id="svg-41ae" style="enable-background:new 0 0 60 60;">
+                      <g>
+                          <path d="M45.563,29.174l-22-15c-0.307-0.208-0.703-0.231-1.031-0.058C22.205,14.289,22,14.629,22,15v30
+                                    c0,0.371,0.205,0.711,0.533,0.884C22.679,45.962,22.84,46,23,46c0.197,0,0.394-0.059,0.563-0.174l22-15
+                                    C45.836,30.64,46,30.331,46,30S45.836,29.36,45.563,29.174z M24,43.107V16.893L43.225,30L24,43.107z"></path>
+                          <path d="M30,0C13.458,0,0,13.458,0,30s13.458,30,30,30s30-13.458,30-30S46.542,0,30,0z M30,58C14.561,58,2,45.439,2,30
+                                    S14.561,2,30,2s28,12.561,28,28S45.439,58,30,58z"></path>
+                      </g>
+                  </svg>
+              </span>
+              <script>
+                // Fonction JavaScript pour gérer le clic sur le deuxième span
+                document.getElementById("monDeuxiemeSpan").addEventListener("click", function() {
+                    // Rediriger vers une autre page
+                    window.location.href = "actualité.html"; 
+                });
+            </script>
+
+
+
+              </div>
+            </div>
+            <div class="u-align-center u-container-style u-custom-item u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-3">
+              <div class="u-container-layout u-similar-container u-container-layout-5">
+                <img class="u-expanded-height u-image u-image-default u-image-8" src="images/Capturedcran2024-01-24123459.png" alt="" data-image-width="542" data-image-height="623">
+                <p class="u-custom-item u-text u-text-5"> la Maison des Sciences Numériques de Saint-Denis (Institut Galilée - Université Sorbonne Paris Nord), les 38 étudiant-es du Master 2 Informatique parcours Exploration Informatique des Données et Décisionnel vont réaliser des entretiens de recrutements pour décrocher leur stage de fin d'études</p>
+                
+                <span class="u-border-2 u-border-palette-1-base u-icon u-icon-circle u-text-palette-1-base u-icon-3" id="monQuatriemeSpan">
+                  <svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 60 60" style="">
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-b6e6"></use>
+                  </svg>
+                  <svg class="u-svg-content" viewBox="0 0 60 60" x="0px" y="0px" id="svg-b6e6" style="enable-background:new 0 0 60 60;">
+                      <g>
+                          <path d="M45.563,29.174l-22-15c-0.307-0.208-0.703-0.231-1.031-0.058C22.205,14.289,22,14.629,22,15v30
+                                c0,0.371,0.205,0.711,0.533,0.884C22.679,45.962,22.84,46,23,46c0.197,0,0.394-0.059,0.563-0.174l22-15
+                                C45.836,30.64,46,30.331,46,30S45.836,29.36,45.563,29.174z M24,43.107V16.893L43.225,30L24,43.107z"></path>
+                          <path d="M30,0C13.458,0,0,13.458,0,30s13.458,30,30,30s30-13.458,30-30S46.542,0,30,0z M30,58C14.561,58,2,45.439,2,30
+                                S14.561,2,30,2s28,12.561,28,28S45.439,58,30,58z"></path>
+                      </g>
+                  </svg>
+              </span>
+
+              <script>
+                // Fonction JavaScript pour gérer le clic sur le quatrième span
+                document.getElementById("monQuatriemeSpan").addEventListener("click", function() {
+                    // Rediriger vers une autre page
+                    window.location.href = "actualité.html#smail  "; // Remplacez "nouvelle_page.html" par l'URL de ma nouvelle page
+                });
+            </script>
+              </div>
+            </div>
+            <div class="u-align-center u-container-style u-custom-item u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-4" data-animation-out="0">
+              <div class="u-container-layout u-similar-container u-container-layout-6">
+                <img class="u-expanded-height u-image u-image-default u-image-9" src="images/1705152295941.jpeg" alt="" data-image-width="1600" data-image-height="1064">
+                <p class="u-custom-item u-text u-text-6"> Exploration de Nouvelles Perspectives Collaboratives dans le domaine de la chirurgie guidée par l'IA avec EVOLUTIS Nous sommes ravis d'avoir accueilli récemment le groupe EVOLUTIS et ses partenaires s au sein de notre structure fédérative de recherche interdisciplinaire : LaMSN - de l'Université Sorbonne Paris Nord. &nbsp;</p>
+                
+                <span class="u-border-2 u-border-palette-1-base u-icon u-icon-circle u-text-palette-1-base u-icon-4" id="monTroisiemeSpan">
+                  <svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 60 60" style="">
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-3977"></use>
+                  </svg>
+                  <svg class="u-svg-content" viewBox="0 0 60 60" x="0px" y="0px" id="svg-3977" style="enable-background:new 0 0 60 60;">
+                      <g>
+                          <path d="M45.563,29.174l-22-15c-0.307-0.208-0.703-0.231-1.031-0.058C22.205,14.289,22,14.629,22,15v30
+                                c0,0.371,0.205,0.711,0.533,0.884C22.679,45.962,22.84,46,23,46c0.197,0,0.394-0.059,0.563-0.174l22-15
+                                C45.836,30.64,46,30.331,46,30S45.836,29.36,45.563,29.174z M24,43.107V16.893L43.225,30L24,43.107z"></path>
+                          <path d="M30,0C13.458,0,0,13.458,0,30s13.458,30,30,30s30-13.458,30-30S46.542,0,30,0z M30,58C14.561,58,2,45.439,2,30
+                                S14.561,2,30,2s28,12.561,28,28S45.439,58,30,58z"></path>
+                      </g>
+                  </svg>
+              </span>
+              <script>
+                // Fonction JavaScript pour gérer le clic sur le troisième span
+                document.getElementById("monTroisiemeSpan").addEventListener("click", function() {
+                    // Rediriger vers une autre page
+                    window.location.href = "actualité.html#smail";  
+                });
+            </script>
+              
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="u-border-1 u-border-white u-line u-line-horizontal u-line-2"></div>
+        <a href="actualité.html" class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius u-btn-1">TOUS LES ACTUES </a>
+        <div class="u-border-1 u-border-white u-line u-line-horizontal u-line-3"></div>
+
+
+
+
+
+
+
+
+      
+
+<!--VIDEOS-->
+
+      <h4 class="u-text u-text-black u-text-default u-text-7">Nos vidéo​s <span style="font-weight: 700;"></span></h4>
+      <div class="u-border-1 u-border-white u-line u-line-horizontal u-line-4"></div>
+      <div class="u-list u-list-2">
+        <div class="u-repeater u-repeater-2">
+          <div class="u-container-style u-list-item u-repeater-item">
+
+
+            <div class="u-container-style u-list-item u-repeater-item">
+              <div class="u-container-layout u-similar-container u-container-layout-8">
+                <a href="VIDEO IA et Science des données.html" class="u-btn-video2">
+                  <img class="u-align-center u-image u-image-round u-radius u-image-11" src="images/Capturedcran2024-01-23133432.png" alt="" data-image-width="399" data-image-height="217">
+                </a>
+                <a href="VIDEO IA et Science des données.html">
+                  <span class="u-border-5 u-border-white u-custom-item u-icon u-icon-circle u-text-white u-icon-6">
+                    <svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 60 60" style="">
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-7f1c"></use>
+                    </svg>
+                    <svg class="u-svg-content" viewBox="0 0 60 60" x="0px" y="0px" id="svg-7f1c" style="enable-background:new 0 0 60 60;">
+                      <path d="M30,0C13.458,0,0,13.458,0,30s13.458,30,30,30s30-13.458,30-30S46.542,0,30,0z M45.563,30.826l-22,15
+                                    C23.394,45.941,23.197,46,23,46c-0.16,0-0.321-0.038-0.467-0.116C22.205,45.711,22,45.371,22,45V15c0-0.371,0.205-0.711,0.533-0.884
+                                    c0.328-0.174,0.724-0.15,1.031,0.058l22,15C45.836,29.36,46,29.669,46,30S45.836,30.64,45.563,30.826z"></path>
+                    </svg>
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+
+
+
+
+          <div class="u-container-style u-list-item u-repeater-item">
+            <div class="u-container-layout u-similar-container u-container-layout-8">
+              <a href="VIDEO IA et Science des données.html" class="u-btn-video2"> 
+               <img class="u-align-center u-image u-image-round u-radius u-image-11" src="images/Capturedcran2024-01-23145939.png" alt="" data-image-width="399" data-image-height="217">
+              </a>
+              <a href="VIDEO IA et Science des données.html">
+                <span class="u-border-5 u-border-white u-custom-item u-icon u-icon-circle u-text-white u-icon-6">
+                  <svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 60 60" style="">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-7f1c"></use>
+                  </svg>
+                  <svg class="u-svg-content" viewBox="0 0 60 60" x="0px" y="0px" id="svg-7f1c" style="enable-background:new 0 0 60 60;">
+                    <path d="M30,0C13.458,0,0,13.458,0,30s13.458,30,30,30s30-13.458,30-30S46.542,0,30,0z M45.563,30.826l-22,15
+                      C23.394,45.941,23.197,46,23,46c-0.16,0-0.321-0.038-0.467-0.116C22.205,45.711,22,45.371,22,45V15c0-0.371,0.205-0.711,0.533-0.884
+                      c0.328-0.174,0.724-0.15,1.031,0.058l22,15C45.836,29.36,46,29.669,46,30S45.836,30.64,45.563,30.826z"></path>
+                  </svg>
+                </span>
+              </a>
+              
+            </div>
+          </div>
+          <div class="u-container-style u-list-item u-repeater-item">
+            <div class="u-container-layout u-similar-container u-container-layout-9">
+              <a href="VIDEO Santé et Numérique.html" class="u-btn-video3"> 
+               <img class="u-align-center u-image u-image-round u-radius u-image-12" src="images/Capturedcran2024-01-23134550.png" alt="" data-image-width="1057" data-image-height="459">
+              </a>
+                <a href="VIDEO Santé et Numérique.html">
+                  <span class="u-border-5 u-border-white u-custom-item u-icon u-icon-circle u-text-white u-icon-6">
+                    <svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 60 60" style="">
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-7f1c"></use>
+                    </svg>
+                    <svg class="u-svg-content" viewBox="0 0 60 60" x="0px" y="0px" id="svg-7f1c" style="enable-background:new 0 0 60 60;">
+                      <path d="M30,0C13.458,0,0,13.458,0,30s13.458,30,30,30s30-13.458,30-30S46.542,0,30,0z M45.563,30.826l-22,15
+                        C23.394,45.941,23.197,46,23,46c-0.16,0-0.321-0.038-0.467-0.116C22.205,45.711,22,45.371,22,45V15c0-0.371,0.205-0.711,0.533-0.884
+                        c0.328-0.174,0.724-0.15,1.031,0.058l22,15C45.836,29.36,46,29.669,46,30S45.836,30.64,45.563,30.826z"></path>
+                    </svg>
+                  </span>
+                </a>
+                
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <a href="VIDEO IA et Science des données.html" class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius u-btn-2">TOUS LES Videos</a>
+      <div class="u-border-1 u-border-white u-line u-line-horizontal u-line-5"></div>
+      <div class="u-border-1 u-border-white u-line u-line-horizontal u-line-6"></div>
+    </section>
+    <section class="u-clearfix u-gradient u-section-2" id="sec-e0b5">
+      <div class="u-clearfix u-sheet u-sheet-1">
+            <div class="u-rotation-parent u-rotation-parent-1"><span class="u-icon u-text-black u-icon-1"id="fleche1"><svg class="u-svg-link u-flip-horizontal" preserveAspectRatio="xMidYMin slice" viewBox="0 0 60 60" style="transform-origin: center center 0px; transform: scaleX(-1);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-80b8"></use></svg><svg class="u-svg-content" viewBox="0 0 60 60" x="0px" y="0px" id="svg-80b8" style="enable-background:new 0 0 60 60;"><path d="M30,0C13.458,0,0,13.458,0,30s13.458,30,30,30s30-13.458,30-30S46.542,0,30,0z M45.563,30.826l-22,15
+      C23.394,45.941,23.197,46,23,46c-0.16,0-0.321-0.038-0.467-0.116C22.205,45.711,22,45.371,22,45V15c0-0.371,0.205-0.711,0.533-0.884
+      c0.328-0.174,0.724-0.15,1.031,0.058l22,15C45.836,29.36,46,29.669,46,30S45.836,30.64,45.563,30.826z"></path></svg></span>
+            </div>
+
+
+
+
+
+
+
+        <!--animation de défilement vers le haut-->
+        <script>
+                                  var fleche1Element = document.getElementById('fleche1');
+
+                            fleche1Element.addEventListener('click', function() {
+                                var targetHeight = 0; 
+
+                                var currentPosition = window.scrollY || window.pageYOffset;
+
+                                var distance = targetHeight - currentPosition;
+
+                                var duration = 1000; 
+
+                                var startTime = null;
+
+                                function animate(currentTime) {
+                                    if (!startTime) startTime = currentTime;
+
+                                    var elapsedTime = currentTime - startTime;
+
+                                    var newPosition = easeInOut(elapsedTime, currentPosition, distance, duration);
+
+                                    window.scrollTo(0, newPosition);
+
+                                    if (elapsedTime < duration) {
+                                        requestAnimationFrame(animate);
+                                    }
+                                }
+
+                                requestAnimationFrame(animate);
+                            });
+
+                            function easeInOut(t, b, c, d) {
+                                t /= d / 2;
+                                if (t < 1) return c / 2 * t * t + b;
+                                t--;
+                                return -c / 2 * (t * (t - 2) - 1) + b;
+                            }
+
+        </script>
+
+
+
+
+
+
+
+                <!-- Au  service de tous-->
+                <img src="images/charte4.PNG" alt="Charte graphique" class="responsive-image2">
+
+                <h1 class="u-text u-text-default u-text-1" id="contact-form">Au service de tous</h1>
+               <p style="color:rgb(250, 250, 250);"> L'Université Sorbonne Paris Nord (USPN) oriente sa stratégie numérique vers la réussite des étudiants, le soutien des enseignants-chercheurs et le rapprochement avec l'industrie. La création de la Maison des Sciences Numériques (LaMSN) vise à fusionner recherche avancée, formations d’excellence, et interactions entre le monde académique et industriel.  LaMSN, en tant que tiers-lieu au sein de l'université, ambitionne d'incorporer un complexe événementiel, des espaces de recherche collaborative, des environnements pédagogiques novateurs et des bureaux nomades, illustrant ainsi un modèle original de convergence entre l'université, le monde socio-économique et la société civile    </p>           
+               <div class="video-container">
+                <video controls src="videos/Au service de tous.mp4"></video>
+            </div>
+            
+</section>                
+   
+    
+    
+      
+<!--FOTTER-->
+    
+      <footer class="u-align-center u-border-2 u-border-white u-clearfix u-footer" id="sec-8f3b"><div class="u-clearfix u-sheet u-sheet-1">
+        <div class="u-border-1 u-border-grey-dark-1 u-line u-line-vertical u-line-1"></div>
+        <div class="u-border-1 u-border-grey-dark-1 u-line u-line-vertical u-line-2"></div>
+        <a href="https://www.univ-spn.fr/" class="u-image u-logo u-image-1" data-image-width="327" data-image-height="61">
+          <img src="images/Capturedcran2024-01-23103331.png" class="u-logo-image u-logo-image-1">
+        </a>
+        <div class="u-rotation-parent u-rotation-parent-1">
+          
+       
+        </div>
+        <p class="u-align-justify u-text u-text-palette-2-base u-text-1">
+          <a href="https://www.univ-spn.fr/espace-presse/" role="link" class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-grey-40 u-btn-1">Presse</a>
+          <br>
+          <a href="https://www.univ-spn.fr/venir-a-sorbonne-paris-nord/" role="link" class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-grey-40 u-btn-2">Accès</a>
+          <br>
+          <a href="https://www.univ-spn.fr/inscriptions/" role="link" class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-grey-40 u-btn-3">Inscriptions</a>
+          <br>
+          <a href="https://www.univ-spn.fr/recrutement/" role="link" class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-grey-40 u-btn-4">Recrutement</a>
+          <br>
+          <a href="https://ent.univ-paris13.fr/" target="_blank" role="link" class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-grey-40 u-text-hover-grey-70 u-btn-5">ENT</a>
+        </p>
+        <p class="u-text u-text-default u-text-grey-40 u-text-2">
+          <a href="https://www.univ-spn.fr/politique-de-cookies/" role="link" class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-grey-40 u-btn-6">Politique de cookies</a>
+          <br>
+          <a href="https://www.univ-spn.fr/mentions-legales/" role="link" class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-grey-40 u-btn-7">Mentions légales</a>
+          <br>
+          <a href="https://www.univ-spn.fr/protections-des-donnees-personnelles/" role="link" class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-grey-40 u-btn-8">Protection des données</a>
+          <br>
+          <a href="https://www.univ-spn.fr/sitemap_index.xml" role="link" class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-grey-40 u-btn-9">Plan du site</a>
+        </p>
+        <div class="u-social-icons u-spacing-18 u-social-icons-1">
+          <a class="u-social-url" target="_blank" href="https://www.facebook.com/univsorbonneparisnord"><span class="u-file-icon u-icon u-social-facebook u-social-icon u-icon-2"><img src="images/fb.png" alt=""></span>
+          </a>
+          <a class="u-social-url" target="_blank" href="https://twitter.com/univ_spn"><span class="u-file-icon u-icon u-social-icon u-social-twitter u-icon-3"><img src="images/twiter.png" alt=""></span>
+          </a>
+          <a class="u-social-url" target="_blank" href="https://www.linkedin.com/school/universit%C3%A9-sorbonne-paris-nord/mycompany/"><span class="u-file-icon u-icon u-social-icon u-social-linkedin u-icon-4"><img src="images/Capturedcran2024-01-23101225t.png" alt=""></span>
+          </a>
+          <a class="u-social-url" target="_blank" href="https://www.instagram.com/univ_spn/"><span class="u-file-icon u-icon u-social-icon u-social-instagram u-icon-5"><img src="images/ig.png" alt=""></span>
+          </a>
+        </div>
+        <p class="u-text u-text-custom-color-2 u-text-3">UNIVERSITE SORBONNE PARIS NORD MEMBRE<span style="font-weight: 700;"></span>
+        </p>
+        <p class="u-text u-text-default u-text-4" style="color: black;">© 2024 USPN | Tous droits réservés .</p>
+      </p>
+      </div></footer>
+   
+
+  
+</body>
+</html>
