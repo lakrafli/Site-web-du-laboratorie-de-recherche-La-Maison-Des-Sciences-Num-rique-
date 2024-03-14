@@ -69,19 +69,19 @@ h1 {
 }
 
 .b1 {
-    top: 80px;
+    top: 10px;
     left: calc(50% - 270px);
 }
 .b2 {
-    top: 386px;
+    top: 482px;
     left: calc(50% + 270px);
 }
 .b3 {
-    top: 805px;
+    top: 971px;
     left: calc(50% - 270px);
 }
 .b4 {
-    top: 1112px;
+    top: 1460px;
     left: calc(50% + 270px);
 }
 
