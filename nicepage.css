@@ -22003,7 +22003,7 @@ a.pswp__share--download:hover {
 .u-tab-link .u-icon.u-file-icon > img[src],
 .u-accordion-link-text .u-icon.u-file-icon > img[src] {
   display: inline-block;
-  height: 1em;
+  height: 2.6em;
   width: auto;
   line-height: 1;
   vertical-align: -0.15em;
@@ -42376,122 +42376,11 @@ a.u-link.u-text-hover-grey-90:hover {
         
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         --theme-sheet-width-xl: 1140px;
         --theme-sheet-width-lg: 940px;
         --theme-sheet-width-md: 720px;
         --theme-sheet-width-sm: 540px;
         --theme-sheet-width-xs: 340px;
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         
         
         
@@ -43087,7 +42976,7 @@ a.u-link.u-text-hover-grey-90:hover {
 
 .u-footer .u-text-1 {
   font-size: 1.125rem;
-  margin: 16px 911px 0 106px;
+  margin: 33px 794px 0 106p
 }
 
 .u-footer .u-btn-1 {
@@ -43117,7 +43006,7 @@ a.u-link.u-text-hover-grey-90:hover {
 
 .u-footer .u-text-2 {
   font-size: 1rem;
-  margin: -117px 480px 0 auto;
+  margin: -149px  480px 0 auto;
 }
 
 .u-footer .u-btn-6 {
@@ -43168,13 +43057,14 @@ a.u-link.u-text-hover-grey-90:hover {
 .u-footer .u-text-3 {
   font-weight: 700;
   font-size: 0.75rem;
-  line-height: 5;
+  line-height: 2;
   margin: 18px 0 0 821px;
 }
 
 .u-footer .u-text-4 {
   font-size: 0.75rem;
-  margin: 18px 500px 4px auto;
+    margin: 6px 312px 3px 470px;
+
 }
 
 .u-footer .u-btn-10 {
@@ -43280,10 +43170,12 @@ a.u-link.u-text-hover-grey-90:hover {
 
   .u-footer .u-text-2 {
     margin-left: 208px;
+    
   }
 
   .u-footer .u-text-3 {
     margin-left: 221px;
+    line-height: 1px;
   }
 
   .u-footer .u-text-4 {
