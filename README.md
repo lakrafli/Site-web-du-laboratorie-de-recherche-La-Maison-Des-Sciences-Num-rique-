@@ -1,1 +1,1 @@
-Lien de site web du Laboratoir http:/lamsn.fr
+🔗 [Site web du Laboratoire LAMSN](http://lamsn.fr)
